@@ -1,0 +1,4 @@
+1. Tener un array predefinido con diferentes modelos de autos.
+2. Luego el usuario ingresa por pantalla sus valores,
+3. Posteriormente se aplica uppercase para normalizar la entrada del usuario
+4. Se chequea si existe en el array y devuelve la cotización.
