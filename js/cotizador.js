@@ -126,7 +126,7 @@ function cotizarVehiculo(marca, modelo, year) {
 
     }
     //evitamos retornar basura
-    return  resultadoCotizacion.filter(vehiculo => vehiculo !== undefined);;
+    return resultadoCotizacion.filter(vehiculo => vehiculo !== undefined);;
 
 
 }
@@ -188,9 +188,13 @@ while (cotizar) {
 
 }
 
-if (vehiculosCotizados && vehiculosCotizados.length > 0) {
-    let totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
+if (vehiculosCotizados.length > 0) {
+    let totalCotizados;
     let contador = 0;
+    if (aseguradora.planes.length > 0) {
+        totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);    
+    }    
+    
     if (contador == 1) {
         console.log("Usted cotizó " + totalCotizados + " vehiculo");
     }
@@ -198,22 +202,20 @@ if (vehiculosCotizados && vehiculosCotizados.length > 0) {
         console.log("Usted cotizó " + totalCotizados + " vehiculos");
     }
 
-    if ( vehiculosCotizados.length > 0) {
-        vehiculosCotizados.forEach(vehiculo => {
+    vehiculosCotizados.forEach(vehiculo => {
 
-            if (contador == 0) {
-                console.log("---------------------------------------------------------");
-                console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
-            }
-            console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
+        if (contador == 0) {
+            console.log("---------------------------------------------------------");
+            console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
+        }
+        console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
 
-            if (contador == aseguradora.planes.length - 1) {
-                console.log("---------------------------------------------------------");
-                contador = 0;
-            }
-            else { contador = contador + 1; }
-        });
-    }
+        if (contador == aseguradora.planes.length - 1) {
+            console.log("---------------------------------------------------------");
+            contador = 0;
+        }
+        else { contador = contador + 1; }
+    });
 
 }
 else {
