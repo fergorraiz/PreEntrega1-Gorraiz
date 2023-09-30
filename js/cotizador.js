@@ -96,7 +96,7 @@ function cotizarVehiculo(marca, modelo, year) {
     {
         alert("Lo sentimos pero su vehiculo no está dentro de nuestro rango de cotización, solo cotizamos vehiculos superiores al año 2000.");
     }
-    else if (year <= lv_anio_actual) {
+    else if (lv_year <= lv_anio_actual) {
         const resultado = aseguradora.vehiculos.filter(vehiculos => {
             return vehiculos.marca === lv_marca && vehiculos.modelo === lv_modelo && vehiculos.activo == true;
         })
@@ -186,7 +186,7 @@ while (cotizar) {
 }
 
 if (vehiculosCotizados.length > 0) {
-    let totalCotizados = vehiculosCotizados.length / aseguradora.planes.length;
+    let totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
     let contador = 0;
     if (contador == 1) {
         console.log("Usted cotizó " + totalCotizados + " vehiculo");
