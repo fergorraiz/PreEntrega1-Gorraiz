@@ -95,12 +95,12 @@ function cotizarVehiculo(marca, modelo, year) {
     if (lv_year < 2000) //No cotizamos vehiculos anteriores al año 2000
     {
         alert("Lo sentimos pero su vehiculo no está dentro de nuestro rango de cotización, solo cotizamos vehiculos superiores al año 2000.");
+
     }
     else if (lv_year <= lv_anio_actual) {
         const resultado = aseguradora.vehiculos.filter(vehiculos => {
             return vehiculos.marca === lv_marca && vehiculos.modelo === lv_modelo && vehiculos.activo == true;
         })
-
         const descuentoAntiguedad = (lv_anio_actual - lv_year) * lv_descuentoPorAnio / 100;
 
         for (let i = 0; i < resultado.length; i++) {
@@ -120,11 +120,14 @@ function cotizarVehiculo(marca, modelo, year) {
                 )
             }
         }
-        return resultadoCotizacion;
     }
     else {
         alert("El año del vehiculo no puede ser superior al año actual.");
+
     }
+    //evitamos retornar basura
+    return  resultadoCotizacion.filter(vehiculo => vehiculo !== undefined);;
+
 
 }
 
@@ -151,7 +154,7 @@ if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
     alert("Los campos marca, modelo, año son obligatorios.");
     cotizar = false;
 }
-else{
+else {
     cotizar = true;
 }
 
@@ -185,7 +188,7 @@ while (cotizar) {
 
 }
 
-if (vehiculosCotizados.length > 0) {
+if (vehiculosCotizados && vehiculosCotizados.length > 0) {
     let totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
     let contador = 0;
     if (contador == 1) {
@@ -195,23 +198,23 @@ if (vehiculosCotizados.length > 0) {
         console.log("Usted cotizó " + totalCotizados + " vehiculos");
     }
 
-    console.log(vehiculosCotizados);
-    vehiculosCotizados.forEach(vehiculo => {
+    if ( vehiculosCotizados.length > 0) {
+        vehiculosCotizados.forEach(vehiculo => {
 
-        if (contador == 0) {
-            console.log("---------------------------------------------------------");
-            console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
-        }
-        console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
+            if (contador == 0) {
+                console.log("---------------------------------------------------------");
+                console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
+            }
+            console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
 
-        if (contador == aseguradora.planes.length - 1) {
-            console.log("---------------------------------------------------------");
-            contador = 0;
-        }
-        else { contador = contador + 1; }
+            if (contador == aseguradora.planes.length - 1) {
+                console.log("---------------------------------------------------------");
+                contador = 0;
+            }
+            else { contador = contador + 1; }
+        });
+    }
 
-
-    });
 }
 else {
     console.log("No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.");
