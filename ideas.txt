@@ -2,3 +2,4 @@
 2. Luego el usuario ingresa por pantalla sus valores,
 3. Posteriormente se aplica uppercase para normalizar la entrada del usuario
 4. Se chequea si existe en el array y devuelve la cotización.
+5. Añadir a la visual de la pagina los diferentes planes que se ofrecen

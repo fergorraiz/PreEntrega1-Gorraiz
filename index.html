@@ -23,11 +23,101 @@
     <meta property="twitter:description"
         content="CotizaPro: Encuentra los mejores seguros al mejor precio. Cotiza y compara seguros de forma rápida y sencilla." />
     <meta property="twitter:image" content="URL_DE_LA_IMAGEN_DE_TU_SITIO_AQUÍ" />
-
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
+    <header>
+        <div class="logo">
+            <a href="../index.html">
+                <img src="img/logo.png" alt="CotizaPro Logo" title="CotizaPro Logo">
+            </a>
+        </div>
+        <ul>
+            <li>
+                <i class="fa fa-phone" aria-hidden="true"></i>+11 5454 1234
+            </li>
+        </ul>
+    </header>
+    <main>
+        <section class="section-container">
+            <h1>CotizaPro</h1>
+            <h2>Donde tus sueños están asegurados</h2>                        
+            <p>¡Bienvenido a CotizaPro! Nuestra misión es brindarte tranquilidad y seguridad en el camino. Sabemos lo
+                importante que es proteger tu vehículo y a tus seres queridos, por eso estamos aquí para ayudarte a
+                encontrar el seguro de auto perfecto para tus necesidades. Con CotizaPro, puedes comparar fácilmente
+                diferentes opciones de seguros de autos de las principales compañías, obtener cotizaciones
+                personalizadas y
+                tomar decisiones informadas. Ya sea que estés buscando cobertura completa, seguros asequibles o
+                simplemente
+                quieras explorar tus opciones, estamos listos para ser tu guía en el mundo de los seguros de autos.
+                ¡Comienza hoy mismo y conduce con confianza!</p>
+        </section>
+
+        <section class="section-container">
+            <h2>Cotizá tu vehículos en solo 3 pasos</h2>
+            <form class="section-container__form" action="#">
+                <div>
+                    <label for="marca">Marca</label>
+                    <input type="text" name="marca" id="marca" placeholder="Ej. Ford (*)" required>
+                </div>
+                <div>
+                    <label for="modelo">Modelo</label>
+                    <input type="text" name="modelo" id="modelo" placeholder="Ej. Focus (*)" required>
+                </div>
+                <div>
+                    <label for="year">Año</label>
+                    <input type="number" name="year" id="year" placeholder="Ej. 2020 (*)" required>
+                </div>
+                <div><span><i>Los campos con * son requeridos</i></span></div>
+
+                <div>
+                    <input type="submit" value="Cotizar">
+                </div>
+
+            </form>
+        </section>
+    </main>
+
     <script src="js/cotizador.js"></script>
+    <!--Footer-->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-container__sec-left" data-aos="fade-right">
+                <h3>CONTACTO</h3>
+                <ul>
+                    <li><i class="fa fa-phone" aria-hidden="true"></i>+11 5454 1234</li>
+
+                    <li><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        Av Córdoba 1200</li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i>
+                        cotizapro@gmail.com </li>
+                </ul>
+            </div>
+            <div class="footer-container__sec-right" data-aos="fade-left">
+                <h3>SEGUINOS EN</h3>
+                <ul>
+                    <li><a href="#" class="fa fa-instagram" aria-label="Nuestro Instagram"></a></li>
+                    <li><a href="#" class="fa fa-facebook" aria-label="Nuestro Facebook"></a></li>
+                    <li><a href="#" class="fa fa-whatsapp" aria-label="Nuestro Whatsapp"></a></li>
+
+                </ul>
+            </div>
+            <p class="footer-container__copyright">© 2023 CotizaPro. Todos los derechos reservados.</p>
+            <p class="footer-container__irtop"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                <a href="#top">Ir arriba</a>
+            </p>
+        </div>
+    </footer>
+    <!--Fin Footer-->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>

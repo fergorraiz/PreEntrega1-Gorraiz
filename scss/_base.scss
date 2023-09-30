@@ -1,0 +1,104 @@
+/* GLOBALES */
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+
+}
+
+html {
+    scroll-behavior: smooth;
+}
+$color-principal-fondo:  #f8f9fa;
+$color-principal-texto: #000;
+$border-color: #C6C8C0;
+$margin: 1rem;
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: $color-principal-fondo;
+    font-family: "Open sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+
+a {
+    text-decoration: none;
+    color: $color-principal-texto;
+
+    &:focus-visible {
+        outline: 1px solid #000;
+        transition: outline 1s ease-in;
+    }
+}
+
+p {
+    color: #555;
+    padding-top: 10px;
+
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input,
+textarea {
+    &:focus {
+        outline: 1px solid #000;
+        transition: outline 1s ease-in;
+    }
+}
+
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin grid-1fr {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 1rem;
+    margin: $margin;
+}
+
+@mixin col-md {
+    width: 80%;
+    max-width: 1400px;
+    align-self: center;
+}
+
+
+.container {
+
+    @include flex-column;
+    overflow: hidden;
+
+}
+
+main {
+    @include flex-column;
+    gap: 1rem;
+}
+
+section h2 {
+    text-align: center;
+    padding: 0 1rem;
+}
+

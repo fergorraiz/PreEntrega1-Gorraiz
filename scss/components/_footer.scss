@@ -1,0 +1,125 @@
+/* FOOTER */
+@mixin margin-bottom {
+    margin-bottom: $margin;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #fFf;
+    color: $color-principal-texto;
+    margin-top: auto;
+    overflow: hidden;
+
+}
+
+
+.footer-container {
+
+
+    @include grid-1fr;
+
+    p {
+        text-align: center;
+    }
+
+
+    &__sec-left {
+        h3 {
+            @include margin-bottom;
+        }
+    }
+
+    &__sec-right {
+        h3 {
+            @include margin-bottom;
+        }
+
+        ul {
+            @include flex-row;
+            justify-content: center;
+            gap: 1rem
+        }
+    }
+}
+
+
+.footer-container__irtop {
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+/*ICONOS REDES SOCIALES**/
+
+.fa {
+    padding: 10px;
+    font-size: 15px;
+    width: 35px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+
+    &-facebook,
+    &-instagram,
+    &-whatsapp {
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
+/*MAPA REDES*/
+$redes: (
+    whatsapp: #64D984,
+    instagram: #125688,
+    facebook: #3a5795,
+);
+
+/*Asignamos valores mediante el bucle*/
+@each $red,
+$color in $redes {
+    .fa-#{$red} {
+        background-color: $color;
+        color: #fff;
+    }
+}
+
+@media(min-width:768px) {
+    .footer-container {
+
+        @include col-md;
+
+    }
+
+}
+
+@media(min-width:768px) and (orientation:landscape) {
+
+    .footer-container {
+
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "contacto redes"
+            "footer-copyright footer-copyright"
+            "irtop irtop";
+
+
+        &__sec-left {
+            grid-area: contacto;
+        }
+
+        &__sec-right {
+            grid-area: redes;
+            justify-self: end;
+        }
+
+        &__copyright {
+            grid-area: footer-copyright;
+        }
+
+        &__irtop {
+            grid-area: irtop;
+        }
+    }
+
+}
