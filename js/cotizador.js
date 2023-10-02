@@ -159,14 +159,13 @@ year = prompt("Ingrese el año de su vehículo");
 let cotizar = true;
 if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
     alert("Los campos marca, modelo, año son obligatorios.");
-    cotizar = false;
+    cotizar = false;    
 }
 
 while (cotizar) {
 
     if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
-        alert("Los campos marca, modelo, año son obligatorios.");
-        cotizar = false;
+        alert("Los campos marca, modelo, año son obligatorios.");        
     } else {
         const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);
         //¿por qué no puedo hacer vehiculosCotizados.push para luego mostrar los valores?
