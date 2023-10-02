@@ -195,7 +195,7 @@ if (vehiculosCotizados.length > 0) {
         totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);    
     }    
     
-    if (contador == 1) {
+    if (totalCotizados == 1) {
         console.log("Usted cotizó " + totalCotizados + " vehiculo");
     }
     else {
