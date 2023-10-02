@@ -188,8 +188,6 @@ while (cotizar) {
             break;
     }
 
-
-
 }
 
 if (vehiculosCotizados.length > 0) {
