@@ -190,7 +190,6 @@ while (cotizar) {
 
 if (vehiculosCotizados.length > 0) {
     let totalCotizados;
-    let contador = 0;
     if (aseguradora.planes.length > 0) {
         totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);    
     }    
@@ -202,6 +201,7 @@ if (vehiculosCotizados.length > 0) {
         console.log("Usted cotizó " + totalCotizados + " vehiculos");
     }
 
+    let contador = 0;
     vehiculosCotizados.forEach(vehiculo => {
 
         if (contador == 0) {
