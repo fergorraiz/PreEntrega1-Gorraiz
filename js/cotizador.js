@@ -8,7 +8,7 @@ class Aseguradora {
         this.vehiculos.push(vehiculos);
     }
     agregarPlan(plan) {
-        this.vehiculos.push(plan);
+        this.planes.push(plan);
     }
 
     get vehiculosActivos() {
@@ -95,7 +95,6 @@ function cotizarVehiculo(marca, modelo, year) {
     if (lv_year < 2000) //No cotizamos vehiculos anteriores al año 2000
     {
         alert("Lo sentimos pero su vehiculo no está dentro de nuestro rango de cotización, solo cotizamos vehiculos superiores al año 2000.");
-
     }
     else if (lv_year <= lv_anio_actual) {
         const resultado = aseguradora.vehiculos.filter(vehiculos => {
@@ -132,7 +131,10 @@ function cotizarVehiculo(marca, modelo, year) {
 }
 
 const aseguradora = new Aseguradora('CotizaPro');
-aseguradora.vehiculos = generarVehiculos();
+const vehiculosGenerados = generarVehiculos();
+vehiculosGenerados.forEach(vehiculo => {
+    aseguradora.agregarVehiculo(vehiculo);
+});
 
 console.log('Aseguradora ' + aseguradora.nombre);
 
@@ -141,21 +143,23 @@ aseguradora.vehiculos[3].actualizarEstado(false);
 console.log('Nuestras cotizaciones disponibles:');
 console.log(aseguradora.vehiculosActivos);
 
-aseguradora.planes.push(new Plan('BRONCE', '15000', '10'));
-aseguradora.planes.push(new Plan('SILVER', '45000', '20'));
-aseguradora.planes.push(new Plan('GOLD', '70000', '30'));
+aseguradora.agregarPlan(new Plan('BRONCE', '15000', '10'));
+aseguradora.agregarPlan(new Plan('SILVER', '45000', '20'));
+aseguradora.agregarPlan(new Plan('GOLD', '70000', '30'));
+console.log('Nuestros planes:');
+console.log(aseguradora.planes);
 
 let vehiculosCotizados = [];
-let marca = prompt("Ingrese la marca de su vehículo");
-let modelo = prompt("Ingrese la modelo de su vehículo");
-let year = prompt("Ingrese el año de su vehículo");
-let cotizar;
+let marca;
+let modelo;
+let year;
+marca = prompt("Ingrese la marca de su vehículo");
+modelo = prompt("Ingrese la modelo de su vehículo");
+year = prompt("Ingrese el año de su vehículo");
+let cotizar = true;
 if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
     alert("Los campos marca, modelo, año son obligatorios.");
     cotizar = false;
-}
-else {
-    cotizar = true;
 }
 
 while (cotizar) {
@@ -167,23 +171,25 @@ while (cotizar) {
         const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);
         //¿por qué no puedo hacer vehiculosCotizados.push para luego mostrar los valores?
         vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
-
     }
 
-    let lv_cotiza = prompt("Desea cotizar otro vehiculo? Y/N");
-    lv_cotiza = lv_cotiza.toUpperCase();
-    switch (lv_cotiza) {
-        case 'Y':
-            cotizar = true;
-            marca = prompt("Ingrese la marca de su vehículo");
-            modelo = prompt("Ingrese la modelo de su vehículo");
-            year = prompt("Ingrese el año de su vehículo");
-            break;
-        case 'N':
-            cotizar = false;
-        default:
-            cotizar = false;
-            break;
+    if (cotizar) {
+
+        let lv_cotiza = prompt("Desea cotizar otro vehiculo? Y/N");
+        lv_cotiza = lv_cotiza.toUpperCase();
+        switch (lv_cotiza) {
+            case 'Y':
+                marca = prompt("Ingrese la marca de su vehículo");
+                modelo = prompt("Ingrese la modelo de su vehículo");
+                year = prompt("Ingrese el año de su vehículo");
+                break;
+            case 'N':
+                cotizar = false;
+            default:
+                cotizar = false;
+                break;
+        }
+
     }
 
 }
@@ -191,9 +197,9 @@ while (cotizar) {
 if (vehiculosCotizados.length > 0) {
     let totalCotizados;
     if (aseguradora.planes.length > 0) {
-        totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);    
-    }    
-    
+        totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
+    }
+
     if (totalCotizados == 1) {
         console.log("Usted cotizó " + totalCotizados + " vehiculo");
     }
