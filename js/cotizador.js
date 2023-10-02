@@ -173,24 +173,22 @@ while (cotizar) {
         vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
     }
 
-    if (cotizar) {
-
-        let lv_cotiza = prompt("Desea cotizar otro vehiculo? Y/N");
-        lv_cotiza = lv_cotiza.toUpperCase();
-        switch (lv_cotiza) {
-            case 'Y':
-                marca = prompt("Ingrese la marca de su vehículo");
-                modelo = prompt("Ingrese la modelo de su vehículo");
-                year = prompt("Ingrese el año de su vehículo");
-                break;
-            case 'N':
-                cotizar = false;
-            default:
-                cotizar = false;
-                break;
-        }
-
+    let lv_cotiza = prompt("Desea cotizar otro vehiculo? Y/N");
+    lv_cotiza = lv_cotiza.toUpperCase();
+    switch (lv_cotiza) {
+        case 'Y':
+            marca = prompt("Ingrese la marca de su vehículo");
+            modelo = prompt("Ingrese la modelo de su vehículo");
+            year = prompt("Ingrese el año de su vehículo");
+            break;
+        case 'N':
+            cotizar = false;
+        default:
+            cotizar = false;
+            break;
     }
+
+
 
 }
 
