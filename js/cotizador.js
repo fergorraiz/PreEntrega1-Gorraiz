@@ -191,33 +191,54 @@ while (cotizar) {
 
 if (vehiculosCotizados.length > 0) {
     let totalCotizados;
+    let respuesta = document.createElement("p");
+    let tablaHtml = document.getElementById("resultadoCotizaciones");
+    let resultado = document.getElementById("resultado");
+
     if (aseguradora.planes.length > 0) {
         totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
     }
 
     if (totalCotizados == 1) {
-        console.log("Usted cotizó " + totalCotizados + " vehiculo");
+        //console.log("Usted cotizó " + totalCotizados + " vehiculo");
+        respuesta.innerHTML = "Usted cotizó " + totalCotizados + " vehiculo";
+        //resultado.innerHTML = respuesta ;        
+
     }
     else {
+        respuesta.innerHTML = "Usted cotizó " + totalCotizados + " vehiculos";
+        //resultado.innerHTML = respuesta ;        
         console.log("Usted cotizó " + totalCotizados + " vehiculos");
     }
 
+    resultado.appendChild(respuesta);
     let contador = 0;
+    let tr;
     vehiculosCotizados.forEach(vehiculo => {
-
+    
         if (contador == 0) {
+          
+            tr = document.createElement("tr");
+            tr.innerHTML =`<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
+            tablaHtml.appendChild(tr);
             console.log("---------------------------------------------------------");
             console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
         }
+        tr = document.createElement("tr");
+        tr.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
+        tablaHtml.appendChild(tr);
+
         console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
 
         if (contador == aseguradora.planes.length - 1) {
+            
             console.log("---------------------------------------------------------");
             contador = 0;
         }
         else { contador = contador + 1; }
-    });
 
+    });
+    //resultado.innerHTML = respuesta + tablaHtml;
 }
 else {
     console.log("No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.");

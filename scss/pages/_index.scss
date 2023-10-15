@@ -1,6 +1,6 @@
 .section-container {
     @include flex-column;
-
+    align-items: center;
     gap: 1rem;
 
     h1 {

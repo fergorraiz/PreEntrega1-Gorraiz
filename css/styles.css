@@ -385,9 +385,29 @@ section h3 {
     max-width: 700px;
   }
 }
+table {
+  display: grid;
+  width: 50%;
+  max-width: 700px;
+  border: 1px solid #000;
+  gap: 0;
+}
+table tr {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-bottom: 1px solid #000;
+}
+table tr td {
+  border-right: 1px solid #000;
+  padding: 1rem;
+  width: 100%;
+}
+
 .section-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 }
 .section-container h1 {
