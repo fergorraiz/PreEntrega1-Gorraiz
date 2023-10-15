@@ -159,13 +159,13 @@ year = prompt("Ingrese el año de su vehículo");
 let cotizar = true;
 if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
     alert("Los campos marca, modelo, año son obligatorios.");
-    cotizar = false;    
+    cotizar = false;
 }
 
 while (cotizar) {
 
     if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
-        alert("Los campos marca, modelo, año son obligatorios.");        
+        alert("Los campos marca, modelo, año son obligatorios.");
     } else {
         const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);
         //¿por qué no puedo hacer vehiculosCotizados.push para luego mostrar los valores?
@@ -188,38 +188,34 @@ while (cotizar) {
     }
 
 }
+let respuesta = document.createElement("p");
+let resultado = document.getElementById("resultado");
 
 if (vehiculosCotizados.length > 0) {
     let totalCotizados;
-    let respuesta = document.createElement("p");
+
     let tablaHtml = document.getElementById("resultadoCotizaciones");
-    let resultado = document.getElementById("resultado");
 
     if (aseguradora.planes.length > 0) {
         totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
     }
 
     if (totalCotizados == 1) {
-        //console.log("Usted cotizó " + totalCotizados + " vehiculo");
         respuesta.innerHTML = "Usted cotizó " + totalCotizados + " vehiculo";
-        //resultado.innerHTML = respuesta ;        
 
     }
     else {
         respuesta.innerHTML = "Usted cotizó " + totalCotizados + " vehiculos";
-        //resultado.innerHTML = respuesta ;        
-        console.log("Usted cotizó " + totalCotizados + " vehiculos");
     }
 
-    resultado.appendChild(respuesta);
     let contador = 0;
     let tr;
     vehiculosCotizados.forEach(vehiculo => {
-    
+
         if (contador == 0) {
-          
+
             tr = document.createElement("tr");
-            tr.innerHTML =`<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
+            tr.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
             tablaHtml.appendChild(tr);
             console.log("---------------------------------------------------------");
             console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
@@ -231,15 +227,17 @@ if (vehiculosCotizados.length > 0) {
         console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
 
         if (contador == aseguradora.planes.length - 1) {
-            
+
             console.log("---------------------------------------------------------");
             contador = 0;
         }
         else { contador = contador + 1; }
 
     });
-    //resultado.innerHTML = respuesta + tablaHtml;
 }
 else {
     console.log("No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.");
+    respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
 }
+
+resultado.insertBefore(respuesta, resultado.firstChild)

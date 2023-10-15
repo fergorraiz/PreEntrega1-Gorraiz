@@ -1,8 +1,10 @@
 .section-container {
     @include flex-column;
-    align-items: center;
     gap: 1rem;
 
+    &:nth-child(3n){
+        align-items: center;
+    }
     h1 {
         padding: 1rem;
         text-align: center;
@@ -19,7 +21,6 @@
 
     }
 
-
 }
 
 .section-article {
@@ -29,7 +30,12 @@
 
 }
 
-
+.resultado{
+    p {
+        border-top: none;
+        font-weight: bold;
+    }
+}
 
 @media(min-width:768px) {
     .section-container {
