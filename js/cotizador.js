@@ -211,11 +211,12 @@ if (vehiculosCotizados.length > 0) {
     let contador = 0;
 
     vehiculosCotizados.forEach(vehiculo => {
-        let tr = document.createElement("tr");
+        
         //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
         if (contador == 0) {
-            tr.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
-            tablaHtml.appendChild(tr);
+            let tr_th = document.createElement("tr");
+            tr_th.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
+            tablaHtml.appendChild(tr_th);
         }
         //Si es el último plan del auto cotizado entonces volvemos contador a cero, caso contrario seguimos acumulando el contador.
         if (contador == aseguradora.planes.length - 1) {
@@ -223,9 +224,9 @@ if (vehiculosCotizados.length > 0) {
         }
         else { contador = contador + 1; }
 
-        tr = document.createElement("tr");
-        tr.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
-        tablaHtml.appendChild(tr);
+        let tr_td = document.createElement("tr");
+        tr_td.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
+        tablaHtml.appendChild(tr_td);
     });
 }
 else {
