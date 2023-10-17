@@ -209,11 +209,11 @@ if (vehiculosCotizados.length > 0) {
     }
 
     let contador = 0;
-    
-    vehiculosCotizados.forEach(vehiculo => {        
-       let tr  = document.createElement("tr");
+
+    vehiculosCotizados.forEach(vehiculo => {
+        let tr = document.createElement("tr");
         //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
-        if (contador == 0) {            
+        if (contador == 0) {
             tr.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
             tablaHtml.appendChild(tr);
         }
@@ -223,7 +223,7 @@ if (vehiculosCotizados.length > 0) {
         }
         else { contador = contador + 1; }
 
-        tr  = document.createElement("tr");
+        tr = document.createElement("tr");
         tr.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
         tablaHtml.appendChild(tr);
     });
