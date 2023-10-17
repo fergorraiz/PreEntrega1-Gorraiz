@@ -1,6 +1,8 @@
-table{
+table {
     display: flex;
     flex-direction: column;
+    padding: 1rem;
+
     tr {
         display: flex;
         flex-direction: column;
@@ -8,36 +10,41 @@ table{
         box-sizing: border-box;
         border: 1px solid #000;
         border-top: none;
-        th, td{
+
+        th,
+        td {
             padding: 1rem;
-            width: 100%;        
+            width: 100%;
         }
+
         th {
             background-color: #00317a;
-            color:#fff;
+            color: #fff;
         }
-        &:first-child{
+
+        &:first-child {
             border: 1px solid #000;
         }
-     
-        &:nth-child(4n)
-        {
+
+        &:nth-child(4n) {
             margin-bottom: $margin;
         }
-        &:last-child{
+
+        &:last-child {
             border-top: none;
-            
-          }
+
+        }
     }
-    
+
 }
 
-@media(min-width:768px){
+@media(min-width:768px) {
     table {
         display: grid;
-        width: 50%;
+        width: 70%;
         max-width: 700px;
         gap: 0;
+
         tr {
             display: flex;
             flex-direction: row;

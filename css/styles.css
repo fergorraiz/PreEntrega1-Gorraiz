@@ -377,17 +377,13 @@ section h3 {
   .section-container__form {
     width: 70%;
     margin: 0 auto;
-  }
-}
-@media (min-width: 1024px) {
-  .section-container__form {
-    width: 50%;
     max-width: 700px;
   }
 }
 table {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 table tr {
   display: flex;
@@ -397,7 +393,8 @@ table tr {
   border: 1px solid #000;
   border-top: none;
 }
-table tr th, table tr td {
+table tr th,
+table tr td {
   padding: 1rem;
   width: 100%;
 }
@@ -418,7 +415,7 @@ table tr:last-child {
 @media (min-width: 768px) {
   table {
     display: grid;
-    width: 50%;
+    width: 70%;
     max-width: 700px;
     gap: 0;
   }
