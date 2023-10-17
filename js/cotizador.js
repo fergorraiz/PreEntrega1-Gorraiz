@@ -209,34 +209,26 @@ if (vehiculosCotizados.length > 0) {
     }
 
     let contador = 0;
-    let tr;
-    vehiculosCotizados.forEach(vehiculo => {
-
-        if (contador == 0) {
-
-            tr = document.createElement("tr");
+    
+    vehiculosCotizados.forEach(vehiculo => {        
+       let tr  = document.createElement("tr");
+        //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
+        if (contador == 0) {            
             tr.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
             tablaHtml.appendChild(tr);
-            console.log("---------------------------------------------------------");
-            console.log(`Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}`);
         }
-        tr = document.createElement("tr");
-        tr.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
-        tablaHtml.appendChild(tr);
-
-        console.log(`Plan: ${vehiculo.plan}, Cotización: $${vehiculo.cotizacion}, Bonificación: ${vehiculo.bonificacion}%`);
-
+        //Si es el último plan del auto cotizado entonces volvemos contador a cero, caso contrario seguimos acumulando el contador.
         if (contador == aseguradora.planes.length - 1) {
-
-            console.log("---------------------------------------------------------");
             contador = 0;
         }
         else { contador = contador + 1; }
 
+        tr  = document.createElement("tr");
+        tr.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
+        tablaHtml.appendChild(tr);
     });
 }
 else {
-    console.log("No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.");
     respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
 }
 
