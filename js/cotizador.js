@@ -144,7 +144,7 @@ function limpiarCotizacion() {
 
 function cargarTablaHTML(tablaHtml, vehiculosCotizados) {
     let contador = 0;
-
+    vehiculosCotizados.reverse();//Invertimos el orden para mostrar primero el último vehículo cotizado
     vehiculosCotizados.forEach(vehiculo => {
 
         //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
@@ -180,13 +180,13 @@ function cargarHistorial() {
         botonLimpiar.className = "btn";
         sectionHistorial.insertBefore(botonLimpiar, tablaHtml);
         botonLimpiar.addEventListener("click", (e) => {
-            
+
             localStorage.clear();
             window.location.reload();//Recargamos la página
-            
+
         });
     }
-    else{        
+    else {
         let respuesta = document.createElement("p");
         respuesta.innerHTML = "No tienes cotizaciones recientes.";
         sectionHistorial.insertBefore(respuesta, tablaHtml);
@@ -246,17 +246,20 @@ formulario.onsubmit = (e) => {
     else {
         const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);
 
-        vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
+        if (resultadoCotizacion && resultadoCotizacion.length > 0) {
+            vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
 
-        localStorage.setItem("vehiculos", JSON.stringify(vehiculosCotizados));
+            localStorage.setItem("vehiculos", JSON.stringify(vehiculosCotizados));
 
-        if (vehiculosCotizados.length > 0) {
-            cargarTablaHTML(tablaHtml, vehiculosCotizados);
+            if (vehiculosCotizados.length > 0) {
+                cargarTablaHTML(tablaHtml, vehiculosCotizados);
+            }
         }
         else {
             respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
             resultado.insertBefore(respuesta, resultado.firstChild)
         }
+
 
     }
 };
