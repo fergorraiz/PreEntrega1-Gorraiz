@@ -126,7 +126,72 @@ function cotizarVehiculo(marca, modelo, year) {
     }
     //evitamos retornar basura
     return resultadoCotizacion.filter(vehiculo => vehiculo !== undefined);;
+}
 
+function limpiarCotizacion() {
+    let tablaHtml = document.getElementById("resultadoCotizaciones");
+    while (tablaHtml.firstChild) {
+        tablaHtml.removeChild(tablaHtml.firstChild);
+    }
+
+    let resultadoSection = document.getElementById("resultado");
+    let respuesta = resultadoSection.querySelector("p");
+
+    if (respuesta) {
+        resultadoSection.removeChild(respuesta);
+    }
+}
+
+function cargarTablaHTML(tablaHtml, vehiculosCotizados) {
+    let contador = 0;
+
+    vehiculosCotizados.forEach(vehiculo => {
+
+        //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
+        if (contador == 0) {
+            let tr_th = document.createElement("tr");
+            tr_th.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
+            tablaHtml.appendChild(tr_th);
+        }
+        //Si es el último plan del auto cotizado entonces volvemos contador a cero, caso contrario seguimos acumulando el contador.
+        if (contador == aseguradora.planes.length - 1) {
+            contador = 0;
+        }
+        else { contador = contador + 1; }
+
+        let tr_td = document.createElement("tr");
+        tr_td.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
+        tablaHtml.appendChild(tr_td);
+    });
+
+}
+
+function cargarHistorial() {
+
+    let tablaHtml = document.getElementById("historialCotizaciones");
+    let vehiculosCotizados = JSON.parse(localStorage.getItem("vehiculos"));
+    let sectionHistorial = document.getElementById("historial");
+
+    if (vehiculosCotizados && vehiculosCotizados.length > 0) {
+        cargarTablaHTML(tablaHtml, vehiculosCotizados);
+        const botonLimpiar = document.createElement("button");
+        botonLimpiar.textContent = "Limpiar";
+        botonLimpiar.id = "btnClear";
+        botonLimpiar.className = "btn";
+        sectionHistorial.insertBefore(botonLimpiar, tablaHtml);
+        botonLimpiar.addEventListener("click", (e) => {
+            
+            localStorage.clear();
+            window.location.reload();//Recargamos la página
+            
+        });
+    }
+    else{        
+        let respuesta = document.createElement("p");
+        respuesta.innerHTML = "No tienes cotizaciones recientes.";
+        sectionHistorial.insertBefore(respuesta, tablaHtml);
+
+    }
 
 }
 
@@ -149,88 +214,52 @@ aseguradora.agregarPlan(new Plan('GOLD', '70000', '30'));
 console.log('Nuestros planes:');
 console.log(aseguradora.planes);
 
-let vehiculosCotizados = [];
-let marca;
-let modelo;
-let year;
-marca = prompt("Ingrese la marca de su vehículo");
-modelo = prompt("Ingrese la modelo de su vehículo");
-year = prompt("Ingrese el año de su vehículo");
-let cotizar = true;
-if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
-    alert("Los campos marca, modelo, año son obligatorios.");
-    cotizar = false;
+let vehiculosCotizados;
+let vehiculosCotizadosTemp = localStorage.getItem("vehiculos");
+
+if (vehiculosCotizadosTemp) {
+    vehiculosCotizados = JSON.parse(vehiculosCotizadosTemp);
+}
+else {
+    vehiculosCotizados = [];
 }
 
-while (cotizar) {
+let formulario = document.getElementById("formCotizacion");
+
+//Capturamos evento submit del formulario
+formulario.onsubmit = (e) => {
+
+    e.preventDefault();
+    limpiarCotizacion();//Limpiamos tabla HTML de sección cotización
+    let tablaHtml = document.getElementById("resultadoCotizaciones");
+    let respuesta = document.createElement("p");
+    let resultado = document.getElementById("resultado");
+
+    /*Parametros de usuario */
+    let marca = document.getElementById("marca").value;
+    let modelo = document.getElementById("modelo").value;
+    let year = document.getElementById("year").value;
 
     if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
         alert("Los campos marca, modelo, año son obligatorios.");
-    } else {
-        const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);
-        //¿por qué no puedo hacer vehiculosCotizados.push para luego mostrar los valores?
-        vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
-    }
-
-    let lv_cotiza = prompt("Desea cotizar otro vehiculo? Y/N");
-    lv_cotiza = lv_cotiza.toUpperCase();
-    switch (lv_cotiza) {
-        case 'Y':
-            marca = prompt("Ingrese la marca de su vehículo");
-            modelo = prompt("Ingrese la modelo de su vehículo");
-            year = prompt("Ingrese el año de su vehículo");
-            break;
-        case 'N':
-            cotizar = false;
-        default:
-            cotizar = false;
-            break;
-    }
-
-}
-let respuesta = document.createElement("p");
-let resultado = document.getElementById("resultado");
-
-if (vehiculosCotizados.length > 0) {
-    let totalCotizados;
-
-    let tablaHtml = document.getElementById("resultadoCotizaciones");
-
-    if (aseguradora.planes.length > 0) {
-        totalCotizados = parseInt(vehiculosCotizados.length / aseguradora.planes.length);
-    }
-
-    if (totalCotizados == 1) {
-        respuesta.innerHTML = "Usted cotizó " + totalCotizados + " vehiculo";
-
     }
     else {
-        respuesta.innerHTML = "Usted cotizó " + totalCotizados + " vehiculos";
+        const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);
+
+        vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
+
+        localStorage.setItem("vehiculos", JSON.stringify(vehiculosCotizados));
+
+        if (vehiculosCotizados.length > 0) {
+            cargarTablaHTML(tablaHtml, vehiculosCotizados);
+        }
+        else {
+            respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
+            resultado.insertBefore(respuesta, resultado.firstChild)
+        }
+
     }
+};
+/*Cargamos cotizaciones anteriores*/
+cargarHistorial();
 
-    let contador = 0;
-
-    vehiculosCotizados.forEach(vehiculo => {
-        
-        //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
-        if (contador == 0) {
-            let tr_th = document.createElement("tr");
-            tr_th.innerHTML = `<th>Marca: ${vehiculo.marca}, Modelo: ${vehiculo.modelo}, Año: ${vehiculo.year}</th>`;
-            tablaHtml.appendChild(tr_th);
-        }
-        //Si es el último plan del auto cotizado entonces volvemos contador a cero, caso contrario seguimos acumulando el contador.
-        if (contador == aseguradora.planes.length - 1) {
-            contador = 0;
-        }
-        else { contador = contador + 1; }
-
-        let tr_td = document.createElement("tr");
-        tr_td.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
-        tablaHtml.appendChild(tr_td);
-    });
-}
-else {
-    respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
-}
-
-resultado.insertBefore(respuesta, resultado.firstChild)

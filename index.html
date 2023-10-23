@@ -46,7 +46,7 @@
     <main>
         <section class="section-container">
             <h1>CotizaPro</h1>
-            <h2>Donde tus sueños están asegurados</h2>                        
+            <h2>Donde tus sueños están asegurados</h2>
             <p>¡Bienvenido a CotizaPro! Nuestra misión es brindarte tranquilidad y seguridad en el camino. Sabemos lo
                 importante que es proteger tu vehículo y a tus seres queridos, por eso estamos aquí para ayudarte a
                 encontrar el seguro de auto perfecto para tus necesidades. Con CotizaPro, puedes comparar fácilmente
@@ -60,7 +60,7 @@
 
         <section class="section-container">
             <h2>Cotizá tu vehículos en solo 3 pasos</h2>
-            <form class="section-container__form" action="#">
+            <form id="formCotizacion" class="section-container__form" action="#">
                 <div>
                     <label for="marca">Marca</label>
                     <input type="text" name="marca" id="marca" placeholder="Ej. Ford (*)" required>
@@ -81,12 +81,17 @@
 
             </form>
         </section>
-       <section id="resultado" class="section-container resultado">
-        <table id="resultadoCotizaciones"class="table">
+        <section id="resultado" class="section-container resultado">
+            <table id="resultadoCotizaciones" class="table">
+            </table>
+        </section>
+        <section id="historial" class="section-container">
+            <h3>Mis últimas cotizaciones</h3>
+            <table id="historialCotizaciones" class="table">
 
-        </table>
-       </section>
-        
+            </table>
+        </section>
+
 
     </main>
 

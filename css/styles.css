@@ -48,6 +48,21 @@ textarea:focus {
   transition: outline 1s ease-in;
 }
 
+.btn {
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 500px;
+  padding: 10px;
+  outline: 0 !important;
+  background-color: #0a4595;
+  color: #fff;
+  cursor: pointer;
+}
+.btn:hover {
+  transition: background-color 1s ease;
+  background-color: #333;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -430,7 +445,7 @@ table tr:last-child {
   flex-direction: column;
   gap: 1rem;
 }
-.section-container:nth-child(3n) {
+.section-container:nth-child(3n), .section-container:last-child {
   align-items: center;
 }
 .section-container h1 {
