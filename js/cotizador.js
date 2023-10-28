@@ -137,9 +137,8 @@ function limpiarCotizacion() {
     let resultadoSection = document.getElementById("resultado");
     let respuesta = resultadoSection.querySelector("p");
 
-    if (respuesta) {
-        resultadoSection.removeChild(respuesta);
-    }
+    respuesta && resultadoSection.removeChild(respuesta);
+
 }
 
 function cargarTablaHTML(tablaHtml, vehiculosCotizados) {
@@ -154,10 +153,7 @@ function cargarTablaHTML(tablaHtml, vehiculosCotizados) {
             tablaHtml.appendChild(tr_th);
         }
         //Si es el último plan del auto cotizado entonces volvemos contador a cero, caso contrario seguimos acumulando el contador.
-        if (contador == aseguradora.planes.length - 1) {
-            contador = 0;
-        }
-        else { contador = contador + 1; }
+        (contador === aseguradora.planes.length - 1) ? (contador = 0) : (contador++);
 
         let tr_td = document.createElement("tr");
         tr_td.innerHTML = `<td>Plan: ${vehiculo.plan}</td><td>Cotización: $${vehiculo.cotizacion}</td><td>Bonificación: ${vehiculo.bonificacion}%</td>`;
@@ -211,18 +207,14 @@ console.log(aseguradora.vehiculosActivos);
 aseguradora.agregarPlan(new Plan('BRONCE', '15000', '10'));
 aseguradora.agregarPlan(new Plan('SILVER', '45000', '20'));
 aseguradora.agregarPlan(new Plan('GOLD', '70000', '30'));
+
 console.log('Nuestros planes:');
 console.log(aseguradora.planes);
 
 let vehiculosCotizados;
 let vehiculosCotizadosTemp = localStorage.getItem("vehiculos");
 
-if (vehiculosCotizadosTemp) {
-    vehiculosCotizados = JSON.parse(vehiculosCotizadosTemp);
-}
-else {
-    vehiculosCotizados = [];
-}
+(vehiculosCotizadosTemp) ? (vehiculosCotizados = JSON.parse(vehiculosCotizadosTemp)) : vehiculosCotizados = [];
 
 let formulario = document.getElementById("formCotizacion");
 
@@ -251,16 +243,12 @@ formulario.onsubmit = (e) => {
 
             localStorage.setItem("vehiculos", JSON.stringify(vehiculosCotizados));
 
-            if (vehiculosCotizados.length > 0) {
-                cargarTablaHTML(tablaHtml, vehiculosCotizados);
-            }
+            vehiculosCotizados.length > 0 && cargarTablaHTML(tablaHtml, vehiculosCotizados);
         }
         else {
             respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
             resultado.insertBefore(respuesta, resultado.firstChild)
         }
-
-
     }
 };
 /*Cargamos cotizaciones anteriores*/
