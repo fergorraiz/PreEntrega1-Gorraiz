@@ -1,41 +1,4 @@
-class Aseguradora {
-    constructor(nombre) {
-        this.nombre = nombre.toUpperCase();
-        this.vehiculos = [];
-        this.planes = [];
-    }
-    agregarVehiculo(vehiculos) {
-        this.vehiculos.push(vehiculos);
-    }
-    agregarPlan(plan) {
-        this.planes.push(plan);
-    }
-
-    get vehiculosActivos() {
-        return this.vehiculos.filter(vehiculo => vehiculo.activo == true)
-    }
-}
-
-class Plan {
-
-    constructor(nombre, precio, bonificacion) {
-        this.nombre = nombre.toUpperCase();
-        this.precioBase = parseFloat(precio);
-        this.bonificacion = parseFloat(bonificacion);
-    }
-}
-
-class Vehiculo {
-    constructor(marca, modelo) {
-        this.marca = marca.toUpperCase();
-        this.modelo = modelo.toUpperCase();
-        this.activo = true;
-    }
-
-    actualizarEstado(estado) {
-        this.activo = estado;
-    }
-}
+import * as clases from './modelo.js';
 
 function eliminarDuplicados(array) {
     const vehiculosUnicos = [];
@@ -76,7 +39,7 @@ function generarVehiculos() {
         const modeloAleatorio = modelosDeMarca[Math.floor(Math.random() * modelosDeMarca.length)];
 
         // Crear un objeto con la marca y el modelo aleatorio
-        const nuevoVehiculo = new Vehiculo(marcaAleatoria, modeloAleatorio);
+        const nuevoVehiculo = new clases.Vehiculo(marcaAleatoria, modeloAleatorio);
 
         // Agregar el objeto al arreglo
         vehiculos.push(nuevoVehiculo);
@@ -191,7 +154,7 @@ function cargarHistorial() {
 
 }
 
-const aseguradora = new Aseguradora('CotizaPro');
+const aseguradora = new clases.Aseguradora('CotizaPro');
 const vehiculosGenerados = generarVehiculos();
 vehiculosGenerados.forEach(vehiculo => {
     aseguradora.agregarVehiculo(vehiculo);
@@ -204,9 +167,9 @@ aseguradora.vehiculos[3].actualizarEstado(false);
 console.log('Nuestras cotizaciones disponibles:');
 console.log(aseguradora.vehiculosActivos);
 
-aseguradora.agregarPlan(new Plan('BRONCE', '15000', '10'));
-aseguradora.agregarPlan(new Plan('SILVER', '45000', '20'));
-aseguradora.agregarPlan(new Plan('GOLD', '70000', '30'));
+aseguradora.agregarPlan(new clases.Plan('BRONCE', '15000', '10'));
+aseguradora.agregarPlan(new clases.Plan('SILVER', '45000', '20'));
+aseguradora.agregarPlan(new clases.Plan('GOLD', '70000', '30'));
 
 console.log('Nuestros planes:');
 console.log(aseguradora.planes);
