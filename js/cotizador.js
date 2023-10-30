@@ -196,18 +196,17 @@ function cargarOpcionesSelect() {
 
             // Limpiar el selector de modelos
             selectModelo.innerHTML = '';
+            
+            const modelosFiltrados = aseguradora.vehiculosActivos
+                .filter(vehiculo => vehiculo.marca === marcaSeleccionada);
 
-            if (marcaSeleccionada !== "--") {
-                const modelosFiltrados = aseguradora.vehiculosActivos
-                    .filter(vehiculo => vehiculo.marca === marcaSeleccionada);
+            modelosFiltrados.forEach(vehiculo => {
+                const optionModelo = document.createElement('option');
+                optionModelo.value = vehiculo.modelo;
+                optionModelo.text = vehiculo.modelo;
+                selectModelo.appendChild(optionModelo);
+            });
 
-                modelosFiltrados.forEach(vehiculo => {
-                    const optionModelo = document.createElement('option');
-                    optionModelo.value = vehiculo.modelo;
-                    optionModelo.text = vehiculo.modelo;
-                    selectModelo.appendChild(optionModelo);
-                });
-            }
         });
     }
 
