@@ -154,8 +154,67 @@ function cargarHistorial() {
 
 }
 
+function cargarOpcionesSelect() {
+    // Obtener los elementos select para marca y modelo
+    const selectMarca = document.getElementById("marca");
+    const selectModelo = document.getElementById("modelo");
+
+    // Limpiar las opciones actuales en ambos selectores
+    selectMarca.innerHTML = '';
+    selectModelo.innerHTML = '';
+
+    if (aseguradora?.vehiculosActivos?.length > 0) {
+        // Crear opciones por cada marca y modelo disponibles
+        aseguradora.vehiculosActivos.forEach(vehiculo => {
+            // Agregar opciones de marcas si no existen ya
+            if (!selectMarca.querySelector(`option[value="${vehiculo.marca}"]`)) {
+                const optionMarca = document.createElement('option');
+                optionMarca.value = vehiculo.marca;
+                optionMarca.text = vehiculo.marca;
+                selectMarca.appendChild(optionMarca);
+            }
+        });
+
+        // Obtener el valor de la primera marca
+        const marcaPorDefecto = selectMarca.querySelector('option:first-of-type').value;
+
+        // Si se encontró una marca por defecto, cargar sus modelos
+        if (marcaPorDefecto) {
+            const modelosPorDefecto = aseguradora.vehiculosActivos.filter(vehiculo => vehiculo.marca === marcaPorDefecto);
+
+            modelosPorDefecto.forEach(vehiculo => {
+                const optionModelo = document.createElement('option');
+                optionModelo.value = vehiculo.modelo;
+                optionModelo.text = vehiculo.modelo;
+                selectModelo.appendChild(optionModelo);
+            });
+        }
+
+        // Agregar event listener para el cambio en el selector de marca
+        selectMarca.addEventListener('change', function () {
+            const marcaSeleccionada = this.value;
+
+            // Limpiar el selector de modelos
+            selectModelo.innerHTML = '';
+
+            if (marcaSeleccionada !== "--") {
+                const modelosFiltrados = aseguradora.vehiculosActivos
+                    .filter(vehiculo => vehiculo.marca === marcaSeleccionada);
+
+                modelosFiltrados.forEach(vehiculo => {
+                    const optionModelo = document.createElement('option');
+                    optionModelo.value = vehiculo.modelo;
+                    optionModelo.text = vehiculo.modelo;
+                    selectModelo.appendChild(optionModelo);
+                });
+            }
+        });
+    }
+
+}
 const aseguradora = new clases.Aseguradora('CotizaPro');
 const vehiculosGenerados = generarVehiculos();
+
 vehiculosGenerados.forEach(vehiculo => {
     aseguradora.agregarVehiculo(vehiculo);
 });
@@ -214,6 +273,9 @@ formulario.onsubmit = (e) => {
         }
     }
 };
+/*Cargamos modelos y marcas disponibles*/
+cargarOpcionesSelect();
 /*Cargamos cotizaciones anteriores*/
 cargarHistorial();
+
 

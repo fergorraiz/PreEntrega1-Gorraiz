@@ -28,14 +28,14 @@
             }
             }
         }
-        input{
+        input, select{
             height: 40px;
             @include form-field;
         }
         textarea{
             @include form-field;
         }
-        input:hover, textarea:hover{
+        input:hover, textarea:hover, select:hover{
             -webkit-transition: border-color 1s ease-in;
             -ms-transition: border-color 1s ease-in;
             transition: border-color 1s ease-in;

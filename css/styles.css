@@ -366,7 +366,7 @@ section h3 {
   transition: background-color 1s ease;
   background-color: #333;
 }
-.section-container__form div input {
+.section-container__form div input, .section-container__form div select {
   height: 40px;
   margin: 10px 0;
   padding: 0.375rem 0.75rem;
@@ -381,7 +381,7 @@ section h3 {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-.section-container__form div input:hover, .section-container__form div textarea:hover {
+.section-container__form div input:hover, .section-container__form div textarea:hover, .section-container__form div select:hover {
   -webkit-transition: border-color 1s ease-in;
   -ms-transition: border-color 1s ease-in;
   transition: border-color 1s ease-in;
