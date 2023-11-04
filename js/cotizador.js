@@ -57,7 +57,13 @@ function cotizarVehiculo(marca, modelo, year) {
 
     if (lv_year < 2000) //No cotizamos vehiculos anteriores al año 2000
     {
-        alert("Lo sentimos pero su vehiculo no está dentro de nuestro rango de cotización, solo cotizamos vehiculos superiores al año 2000.");
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Lo sentimos, pero solo cotizamos vehiculos superiores al año 2000.",
+            showConfirmButton: false,
+            timer: 2000,
+        });
     }
     else if (lv_year <= lv_anio_actual) {
         const resultado = aseguradora.vehiculos.filter(vehiculos => {
@@ -84,7 +90,14 @@ function cotizarVehiculo(marca, modelo, year) {
         }
     }
     else {
-        alert("El año del vehiculo no puede ser superior al año actual.");
+
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "El año del vehiculo no puede ser superior al año actual.",
+            showConfirmButton: false,
+            timer: 2000,
+        });
 
     }
     //evitamos retornar basura
@@ -196,7 +209,7 @@ function cargarOpcionesSelect() {
 
             // Limpiar el selector de modelos
             selectModelo.innerHTML = '';
-            
+
             const modelosFiltrados = aseguradora.vehiculosActivos
                 .filter(vehiculo => vehiculo.marca === marcaSeleccionada);
 
@@ -253,8 +266,15 @@ formulario.onsubmit = (e) => {
     let modelo = document.getElementById("modelo").value;
     let year = document.getElementById("year").value;
 
-    if (marca.length == 0 && modelo.length == 0 && year.length == 0) {
-        alert("Los campos marca, modelo, año son obligatorios.");
+    if (marca.length === 0 || modelo.length === 0 || year.length === 0) {
+        Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Los campos marca, modelo, año son obligatorios.",
+            showConfirmButton: false,
+            timer: 2000,
+        });
+
     }
     else {
         const resultadoCotizacion = cotizarVehiculo(marca, modelo, year);

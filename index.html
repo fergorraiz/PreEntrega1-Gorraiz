@@ -63,19 +63,19 @@
             <form id="formCotizacion" class="section-container__form" action="#">
                 <div>
                     <label for="marca">Marca</label>
-                    <select name="marca" id="marca" required>
+                    <select name="marca" id="marca" >
                         
                     </select>                    
                 </div>
                 <div>
                     <label for="modelo">Modelo</label>
-                    <select name="modelo" id="modelo" required>
+                    <select name="modelo" id="modelo" >
                         
                     </select>                
                 </div>
                 <div>
                     <label for="year">Año</label>
-                    <input type="number" name="year" id="year" placeholder="Ej. 2020 (*)" required>
+                    <input type="number" name="year" id="year" placeholder="Ej. 2020 (*)" >
                 </div>
                 <div><span><i>Los campos con * son requeridos</i></span></div>
 
@@ -130,8 +130,9 @@
         </div>
     </footer>
     <!--Fin Footer-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="js/modelo.js"></script>
-    <script type="module" src="js/cotizador.js"></script>
+    <script type="module" src="js/cotizador.js"></script>    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
