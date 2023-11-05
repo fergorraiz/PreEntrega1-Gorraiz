@@ -285,6 +285,14 @@ formulario.onsubmit = (e) => {
             localStorage.setItem("vehiculos", JSON.stringify(vehiculosCotizados));
 
             vehiculosCotizados.length > 0 && cargarTablaHTML(tablaHtml, vehiculosCotizados);
+            Toastify({
+                text: "Vehiculo cotizado",
+                duration: 2000,
+                position: "right",
+                style: {
+                    background: "#0a4595",
+                }
+            }).showToast();
         }
         else {
             respuesta.innerHTML = "No se encontraron cotizaciones para los parametros ingresados. Por favor, vuelva a intentarlo.";
