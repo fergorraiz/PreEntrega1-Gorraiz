@@ -1,52 +1,5 @@
 import * as clases from './modelo.js';
 
-function eliminarDuplicados(array) {
-    const vehiculosUnicos = [];
-    const marcasYModelosVistos = new Set();
-
-    for (const vehiculo of array) {
-        const clave = vehiculo.marca + vehiculo.modelo;
-
-        if (!marcasYModelosVistos.has(clave)) {
-            marcasYModelosVistos.add(clave);
-            vehiculosUnicos.push(vehiculo);
-        }
-    }
-
-    return vehiculosUnicos;
-}
-
-function generarVehiculos() {
-    // Array de marcas y modelos disponibles
-    const marcasDisponibles = ["VOLKSWAGEN", "FORD", "TOYOTA", "FIAT", "RENAULT", "CHEVROLET"];
-    const modelosPorMarca = {
-        "VOLKSWAGEN": ["AMAROK", "GOLF", "JETTA", "POLO"],
-        "FORD": ["FOCUS", "FIESTA", "RANGER", "ESCAPE"],
-        "TOYOTA": ["COROLLA", "CAMRY", "RAV4", "HILUX"],
-        "FIAT": ["500", "PANDA", "TIPO", "DOBLO"],
-        "RENAULT": ["CLIO", "MEGANE", "KADJAR", "DUSTER"],
-        "CHEVROLET": ["CRUZE", "SPARK", "EQUINOX", "SILVERADO"]
-    };
-    // Arreglo para almacenar los objetos generados
-    const vehiculos = [];
-    // Generar 30 objetos diferentes
-    for (let i = 0; i < 30; i++) {
-        // Elegir una marca aleatoria de la lista de marcas disponibles
-        const marcaAleatoria = marcasDisponibles[Math.floor(Math.random() * marcasDisponibles.length)];
-
-        // Elegir un modelo aleatorio correspondiente a la marca
-        const modelosDeMarca = modelosPorMarca[marcaAleatoria];
-        const modeloAleatorio = modelosDeMarca[Math.floor(Math.random() * modelosDeMarca.length)];
-
-        // Crear un objeto con la marca y el modelo aleatorio
-        const nuevoVehiculo = new clases.Vehiculo(marcaAleatoria, modeloAleatorio);
-
-        // Agregar el objeto al arreglo
-        vehiculos.push(nuevoVehiculo);
-    }
-    return eliminarDuplicados(vehiculos);
-}
-
 function cotizarVehiculo(marca, modelo, year) {
     const resultadoCotizacion = [];
     const lv_anio_actual = new Date().getFullYear();
@@ -141,7 +94,7 @@ function cargarTablaHTML(tablaHtml, vehiculosCotizados) {
 function cargarHistorial() {
 
     let tablaHtml = document.getElementById("historialCotizaciones");
-    let vehiculosCotizados = JSON.parse(localStorage.getItem("vehiculos"));
+    let vehiculosCotizados = JSON.parse(localStorage.getItem("vehiculosCotizados"));
     let sectionHistorial = document.getElementById("historial");
 
     if (vehiculosCotizados && vehiculosCotizados.length > 0) {
@@ -153,7 +106,7 @@ function cargarHistorial() {
         sectionHistorial.insertBefore(botonLimpiar, tablaHtml);
         botonLimpiar.addEventListener("click", (e) => {
 
-            localStorage.clear();
+            localStorage.removeItem("vehiculosCotizados");
             window.location.reload();//Recargamos la página
 
         });
@@ -225,10 +178,11 @@ function cargarOpcionesSelect() {
 
 }
 const aseguradora = new clases.Aseguradora('CotizaPro');
-const vehiculosGenerados = generarVehiculos();
+const vehiculosGenerados = JSON.parse(localStorage.getItem("vehiculos"));
+const planesVigentes = JSON.parse(localStorage.getItem("planes"));
 
 vehiculosGenerados.forEach(vehiculo => {
-    aseguradora.agregarVehiculo(vehiculo);
+    aseguradora.agregarVehiculo(new clases.Vehiculo(vehiculo.marca, vehiculo.modelo));
 });
 
 console.log('Aseguradora ' + aseguradora.nombre);
@@ -238,15 +192,15 @@ aseguradora.vehiculos[3].actualizarEstado(false);
 console.log('Nuestras cotizaciones disponibles:');
 console.log(aseguradora.vehiculosActivos);
 
-aseguradora.agregarPlan(new clases.Plan('BRONCE', '15000', '10'));
-aseguradora.agregarPlan(new clases.Plan('SILVER', '45000', '20'));
-aseguradora.agregarPlan(new clases.Plan('GOLD', '70000', '30'));
+planesVigentes.forEach(plan => {
+    aseguradora.agregarPlan(new clases.Plan(plan.nombre, plan.precioBase, plan.bonificacion))
+})
 
 console.log('Nuestros planes:');
 console.log(aseguradora.planes);
 
 let vehiculosCotizados;
-let vehiculosCotizadosTemp = localStorage.getItem("vehiculos");
+let vehiculosCotizadosTemp = localStorage.getItem("vehiculosCotizados");
 
 (vehiculosCotizadosTemp) ? (vehiculosCotizados = JSON.parse(vehiculosCotizadosTemp)) : vehiculosCotizados = [];
 
@@ -282,13 +236,14 @@ formulario.onsubmit = (e) => {
         if (resultadoCotizacion && resultadoCotizacion.length > 0) {
             vehiculosCotizados = vehiculosCotizados.concat(resultadoCotizacion);
 
-            localStorage.setItem("vehiculos", JSON.stringify(vehiculosCotizados));
+            localStorage.setItem("vehiculosCotizados", JSON.stringify(vehiculosCotizados));
 
             vehiculosCotizados.length > 0 && cargarTablaHTML(tablaHtml, vehiculosCotizados);
             Toastify({
                 text: "Vehiculo cotizado",
                 duration: 2000,
                 position: "right",
+                gravity: "bottom",
                 style: {
                     background: "#0a4595",
                 }
