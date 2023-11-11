@@ -73,6 +73,8 @@ function limpiarCotizacion() {
 function cargarTablaHTML(tablaHtml, vehiculosCotizados) {
     let contador = 0;
     vehiculosCotizados.reverse();//Invertimos el orden para mostrar primero el último vehículo cotizado
+    console.log(vehiculosCotizados);
+
     vehiculosCotizados.forEach(vehiculo => {
 
         //Solamente mostramos 1 vez en la cabecera los datos del auto, dado que se repiten para todos los planes disponibles.
@@ -177,24 +179,32 @@ function cargarOpcionesSelect() {
     }
 
 }
+
 const aseguradora = new clases.Aseguradora('CotizaPro');
 const vehiculosGenerados = JSON.parse(localStorage.getItem("vehiculos"));
-const planesVigentes = JSON.parse(localStorage.getItem("planes"));
 
 vehiculosGenerados.forEach(vehiculo => {
     aseguradora.agregarVehiculo(new clases.Vehiculo(vehiculo.marca, vehiculo.modelo));
 });
 
+const cargarPlanesVigentes = async () => {
+    const response = await fetch("./db/planes.json");
+    const data = await response.json();
+    console.log(data); // Verifica el contenido del JSON
+    data.forEach((plan) => {
+        aseguradora.agregarPlan(new clases.Plan(plan.nombre, plan.precioBase, plan.bonificacion))
+    });
+};
+
+cargarPlanesVigentes();
+
+console.log(aseguradora.planes.length);
 console.log('Aseguradora ' + aseguradora.nombre);
 
 aseguradora.vehiculos[3].actualizarEstado(false);
 
 console.log('Nuestras cotizaciones disponibles:');
 console.log(aseguradora.vehiculosActivos);
-
-planesVigentes.forEach(plan => {
-    aseguradora.agregarPlan(new clases.Plan(plan.nombre, plan.precioBase, plan.bonificacion))
-})
 
 console.log('Nuestros planes:');
 console.log(aseguradora.planes);
