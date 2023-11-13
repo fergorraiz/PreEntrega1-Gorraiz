@@ -256,6 +256,6 @@ formulario.onsubmit = (e) => {
 /*Cargamos modelos y marcas disponibles*/
 cargarOpcionesSelect();
 /*Cargamos cotizaciones anteriores*/
-setTimeout(cargarHistorial, 100);
+setTimeout(cargarHistorial, 500);
 
 
